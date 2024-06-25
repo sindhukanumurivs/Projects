@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from random import uniform as rnd
-from ImageFinder.ImageFinder import get_images_links as find_image
+
 from streamlit_echarts import st_echarts
 from one import recommend,output_recommended_recipes
 st.set_page_config(page_title="Automatic Diet Recommendation", page_icon="💪",layout="wide")
@@ -78,9 +78,7 @@ class Person:
             print("$")
             output1=output_recommended_recipes(recommendation_dataframe)
             recommendations.append(output1)
-        for recommendation in recommendations:
-            for recipe in recommendation:
-                recipe['image_link']=find_image(recipe['Name']) 
+        
         return recommendations
 
 class Display:
@@ -122,8 +120,7 @@ class Display:
                         
                         recipe_name=recipe['Name']
                         expander = st.expander(recipe_name)
-                        recipe_link=recipe['image_link']
-                        recipe_img=f'<div><center><img src={recipe_link} alt={recipe_name}></center></div>'     
+                       
                         nutritions_df=pd.DataFrame({value:[recipe[value]] for value in nutritions_values})      
                         
                         expander.markdown(recipe_img,unsafe_allow_html=True)  
